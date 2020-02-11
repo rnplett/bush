@@ -69,8 +69,8 @@ exports.postDeletePerson = (req, res, next) => {
   const personId = req.body.personId;
   Person.deleteById(personId)
     .then(() => {
-      console.log('DELETED PERSON!')
-      res.redirect('/admin/people')
+      console.log('DELETED PERSON!');
+      res.redirect('/admin/people');
     })
     .catch(err => console.log(err));
 
