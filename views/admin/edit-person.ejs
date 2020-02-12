@@ -18,7 +18,7 @@
             </div>
             <div class="form-control">
                 <label for="birthdate">Birth Date:</label>
-                <input type="date" name="birthdate" id="birthdate" step="0.01" value="<% if (editing) { %><%= person.birthdate %><% } %>">
+                <input type="date" name="birthdate" id="birthdate" step="0.01" value="<% if (editing) { %><%= person.birthdate.getFullYear()+'-'+person.birthdate.getMonth()+'-'+person.birthdate.getDate %><% } %>">
             </div>
             <div class="form-control">
                 <label for="description">Description:</label>

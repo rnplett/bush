@@ -2,9 +2,10 @@ const path = require('path');
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const creds = require("./data/creds");
 
 const errorController = require('./controllers/error');
-const mongoConnect = require('./util/database').mongoConnect;
+const mongoose = require('mongoose');
 
 const app = express();
 
@@ -22,7 +23,12 @@ app.use(shopRoutes);
 
 app.use(errorController.get404);
 
-mongoConnect(() => {
-  app.listen(3000);
-});
+mongoose
+  .connect(creds.MONGO_CONNECT_STRING)
+  .then(result => {
+    app.listen(3000);
+  })
+  .catch(err => {
+    console.log(err);
+  });
 

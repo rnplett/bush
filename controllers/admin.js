@@ -1,5 +1,4 @@
 const Person = require('../models/person');
-const getDb = require('../util/database');
 
 exports.gethome = (req, res, next) => {
   res.render('admin/home', {
@@ -10,7 +9,7 @@ exports.gethome = (req, res, next) => {
 };
 
 exports.getPeople = (req, res, next) => {
-  Person.fetchAll()
+  Person.find()
     .then(people => {
       res.render('admin/people', {
         people: people,
@@ -33,9 +32,16 @@ exports.postAddPerson = (req, res, next) => {
   const birthdate = req.body.birthdate;
   const imageUrl = req.body.imageUrl;
   const description = req.body.description;
-  const person = new Person(name, birthdate, imageUrl, description);
-  person.save();
-  res.redirect('/admin/people');
+  const person = new Person({ name: name, birthdate: birthdate, imageUrl: imageUrl, description: description });
+  person
+    .save()
+    .then(result => {
+      console.log('Person Created!')
+      res.redirect('/admin/people')
+    })
+    .catch(err => {
+      console.log(err)
+    });
 };
 
 exports.getPerson = (req, res, next) => {
@@ -56,18 +62,26 @@ exports.postEditPerson = (req, res, next) => {
   const birthdate = req.body.birthdate;
   const imageUrl = req.body.imageUrl;
   const description = req.body.description;
-  const person = new Person(name, birthdate, imageUrl, description, personId);
-  person.save()
+  Person.findById(personId)
+    .then(person => {
+      person.name = name;
+      person.birthdate = birthdate;
+      person.imageUrl = imageUrl;
+      person.description = description;
+      return person.save();
+    })
     .then(result => {
-      console.log('UPDATED PRODUCT!');
+      console.log('Person Updated!');
       res.redirect('/admin/people');
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      console.log(err);
+    });
 };
 
 exports.postDeletePerson = (req, res, next) => {
   const personId = req.body.personId;
-  Person.deleteById(personId)
+  Person.findByIdAndRemove(personId)
     .then(() => {
       console.log('DELETED PERSON!');
       res.redirect('/admin/people');
