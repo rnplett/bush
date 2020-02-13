@@ -20,7 +20,7 @@
                                 </div>
                                 <div class="card__content">
                                     <b class="person__birthdate">
-                                        <%= person.birthdate %>
+                                        <%= person.birthdate.toISOString().substr(0,10) %>
                                     </b>
                                     <p class="person__description">
                                         <%= person.description %>

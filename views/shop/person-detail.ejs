@@ -9,7 +9,7 @@
             <div>
                 <img src="<%= person.imageUrl %>" alt="<%= person.name %>">
             </div>
-            <h2><%= person.birthdate %></h2>
+            <b><%= person.birthdate.toISOString().substr(0,10) %></b>
             <p><%= person.description %></p>
             <%- include('../includes/add-to-cart.ejs') %>
         </main>
