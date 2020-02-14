@@ -10,21 +10,14 @@
                     <div class="grid">
                         <% for (let person of people) { %>
                             <article class="card person-item">
-                                <header class="card__header">
-                                    <h1 class="person__title">
-                                        <%= person.name %>
-                                    </h1>
-                                </header>
                                 <div class="card__image">
                                     <img src="<%= person.imageUrl %>" alt="<%= person.title %>">
                                 </div>
                                 <div class="card__content">
-                                    <h2 class="person__price">
-                                        <%= person.birthdate %>
-                                    </h2>
-                                    <p class="person__description">
-                                        <%= person.description %>
-                                    </p>
+                                    <b>
+                                        <%= person.name %><br>
+                                        <%= person.birthdate.toISOString().substr(0,10) %>                                      
+                                    </b>
                                 </div>
                                 <div class="card__actions">
                                     <a href="/admin/edit-person/<%= person._id %>?edit=true" class="btn">Edit</a>

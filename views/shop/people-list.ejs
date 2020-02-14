@@ -10,21 +10,25 @@
                     <div class="grid">
                         <% for (let person of people) { %>
                             <article class="card person-item">
-                                <header class="card__header">
-                                    <b class="person__title">
-                                        <%= person.name %>
-                                    </b>
-                                </header>
-                                <div class="card__image">
+                                <!-- <div class="card__image">
                                     <img src="<%= person.imageUrl %>" alt="<%= person.title %>">
-                                </div>
+                                </div> -->
                                 <div class="card__content">
-                                    <b class="person__birthdate">
-                                        <%= person.birthdate.toISOString().substr(0,10) %>
+                                  <div class="card__image">
+                                    <img src="<%= person.imageUrl %>" alt="<%= person.title %>">
+                                  </div>
+                                  <div class="person__name">
+                                    <b>
+                                      <%= person.name %><br>
+                                      <%= person.birthdate.toISOString().substr(0,10) %>
                                     </b>
-                                    <p class="person__description">
+                                  </div>
+                                  <div class="person__description">
+                                    <p>
                                         <%= person.description %>
                                     </p>
+                                  </div>
+
                                 </div>
                             </article>
                             <% } %>

@@ -6,22 +6,26 @@
 }
 
 .person-item {
-    width: 10rem;
     max-width: 95%;
     margin: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .person__name {
-    font-size: 0.8rem;
+    float: left;
+    font-size: 0.2rem;
     text-align: center;
 }
 
 .person__birthdate {
+    float: left;
+    font-size: 0.2rem;
     text-align: center;
-    color: #4d4d4d;
-    margin-bottom: 0.5rem;
 }
 
 .person__description {
+    float: right;
     text-align: center;
 }
