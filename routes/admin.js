@@ -19,6 +19,9 @@ router.get('/edit-person/:personId', adminController.getPerson);
 router.post('/edit-person', adminController.postEditPerson);
 
 // /admin/edit-person => POST
+router.post('/filterAPI', adminController.postFilterPeopleAPI);
+
+// /admin/edit-person => POST
 router.post('/filter', adminController.postFilterPeople);
 
 // /people => GET - General people directory with admin buttons

@@ -22,7 +22,7 @@ exports.getPeople = (req, res, next) => {
 };
 
 exports.postFilterPeople = (req, res, next) => {
-  Person.find({name: { $regex: req.body.filterText, $options: 'i' }})
+  Person.find({ name: { $regex: req.body.filterText, $options: 'i' } })
     .then(people => {
       res.render('admin/people', {
         people: people,
@@ -30,6 +30,16 @@ exports.postFilterPeople = (req, res, next) => {
         path: 'admin/people'
       })
     });
+};
+
+exports.postFilterPeopleAPI = (req, res, next) => {
+  Person.find({ name: { $regex: req.query.filterText, $options: 'i' } })
+    .then(people => {
+      res.send(people)
+    })
+    .catch(err => {
+      console.log(err)
+    })
 };
 
 exports.getAddPerson = (req, res, next) => {
