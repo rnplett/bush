@@ -7,6 +7,12 @@
 
             <main>
                 <% if (people.length > 0) { %>
+                    <div>
+                      <form action="/admin/filter" method="POST">
+                        <input type="text" value="" name="filterText">
+                        <button class="btn" type="submit">Search</button>
+                      </form>
+                    </div>  
                     <div class="grid">
                         <% for (let person of people) { %>
                             <article class="card person-item">

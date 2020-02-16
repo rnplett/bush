@@ -21,6 +21,17 @@ exports.getPeople = (req, res, next) => {
     });
 };
 
+exports.postFilterPeople = (req, res, next) => {
+  Person.find({name: { $regex: req.body.filterText, $options: 'i' }})
+    .then(people => {
+      res.render('admin/people', {
+        people: people,
+        pageTitle: 'People List',
+        path: 'admin/people'
+      })
+    });
+};
+
 exports.getAddPerson = (req, res, next) => {
   res.render('admin/edit-person', {
     pageTitle: 'Add Person',

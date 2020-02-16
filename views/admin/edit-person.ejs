@@ -14,9 +14,9 @@
             </div>
             <div class="form-control">
                 <label for="imageUrl">Image URL:</label>
-                <input type="text" name="imageUrl" id="imageUrl" value="<% if (editing) { %><%= person.imageUrl %><% } else {
-                  %>https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTLWIz0P6f2Vrb19poSalmpjn7MCNB_xYEmBY1llUbs2QDbUekF<%
-                  } %>">
+                <input type="text" name="imageUrl" id="imageUrl" value="<% if (editing) { %><%= person.imageUrl %><% } else { %>
+                  https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTLWIz0P6f2Vrb19poSalmpjn7MCNB_xYEmBY1llUbs2QDbUekF
+                  <% } %>">
             </div>
             <div class="form-control">
                 <label for="birthdate">Birth Date:</label>
