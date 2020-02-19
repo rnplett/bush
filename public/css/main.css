@@ -172,11 +172,11 @@ form {
 }
 
 .card__image img {
-  width: 100%;
+ width: 100%;
 }
 
 .card__actions {
-  padding: 1rem;
+  padding: 0.8rem;
   text-align: center;
 }
 
