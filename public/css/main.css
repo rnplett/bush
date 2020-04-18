@@ -139,43 +139,51 @@ form {
 }
 
 .grid {
+  margin-top: 1rem;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  align-items: stretch;
+  align-items: center;
   flex-direction: column;
 }
 
 .card {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  margin: 0.5rem;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.card__header,
-.card__content {
+.card__name {
   padding: 0 0;
-}
-
-.card__content {
   width: 15rem;
   text-align: center;
 }
 
-.card__header h1,
-.card__content h1,
-.card__content h2,
-.card__content p {
-  margin: 0;
+.card__description {
+  padding: 0 0;
+  width: 15rem;
+  text-align: center;
 }
 
 .card__image {
   width: 3rem;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .card__image img {
+ display: inline-block;
+ vertical-align: middle;
+ margin-left: 0.3rem;
  width: 100%;
+ border-radius: 10%;
 }
 
 .card__actions {
+  width: 10rem;
   padding: 0.8rem;
   text-align: center;
 }

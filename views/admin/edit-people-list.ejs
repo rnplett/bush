@@ -15,15 +15,13 @@
                     </div>  
                     <div class="grid">
                         <% for (let person of people) { %>
-                            <article class="card person-item">
+                            <article class="card">
                                 <div class="card__image">
                                     <img src="<%= person.imageUrl %>" alt="<%= person.title %>">
                                 </div>
-                                <div class="card__content">
-                                    <b>
-                                        <%= person.name %><br>
-                                        <%= person.birthdate.toISOString().substr(0,10) %>                                      
-                                    </b>
+                                <div class="card__name">
+                                  <%= person.name %><br>
+                                  <%= person.birthdate.toISOString().substr(0,10) %>                                      
                                 </div>
                                 <div class="card__actions">
                                     <a href="/admin/edit-person/<%= person._id %>?edit=true" class="btn">Edit</a>

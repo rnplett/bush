@@ -18,8 +18,8 @@ router.get('/edit-person/:personId', adminController.getPerson);
 // /admin/edit-person => POST
 router.post('/edit-person', adminController.postEditPerson);
 
-// /admin/edit-person => POST
-router.post('/filterAPI', adminController.postFilterPeopleAPI);
+// /admin/filterAPI => POST
+router.post('/filterAPI/:filterText', adminController.postFilterPeopleAPI);
 
 // /admin/edit-person => POST
 router.post('/filter', adminController.postFilterPeople);

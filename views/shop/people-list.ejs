@@ -4,37 +4,30 @@
 
     <body>
         <%- include('../includes/navigation.ejs') %>
-
-            <main>
-                <% if (people.length > 0) { %>
-                    <div class="grid">
-                        <% for (let person of people) { %>
-                            <article class="card person-item">
-                                <!-- <div class="card__image">
-                                    <img src="<%= person.imageUrl %>" alt="<%= person.title %>">
-                                </div> -->
-                                <div class="card__content">
-                                  <div class="card__image">
-                                    <img src="<%= person.imageUrl %>" alt="<%= person.title %>">
-                                  </div>
-                                  <div class="person__name">
-                                    <b>
-                                      <%= person.name %><br>
-                                      <%= person.birthdate.toISOString().substr(0,10) %>
-                                    </b>
-                                  </div>
-                                  <div class="person__description">
-                                    <p>
-                                        <%= person.description %>
-                                    </p>
-                                  </div>
-
-                                </div>
-                            </article>
-                            <% } %>
-                    </div>
-                    <% } else { %>
-                        <h1>No Products Found!</h1>
-                        <% } %>
-            </main>
-            <%- include('../includes/end.ejs') %>
+        <main>
+          <% if (people.length > 0) { %>
+            <div class="grid">
+              <% for (let person of people) { %>
+                <div class="card">
+                  <div class="card__image">
+                    <img src="<%= person.imageUrl %>" alt="<%= person.title %>">
+                  </div>
+                  <div class="card__name">
+                    <b>
+                      <%= person.name %><br>
+                      <%= person.birthdate.toISOString().substr(0,10) %>
+                    </b>
+                  </div>
+                  <div class="card__description">
+                    <p>
+                        <%= person.description %>
+                    </p>
+                  </div>
+                </div>
+              <% } %>
+            </div>
+          <% } else { %>
+            <h1>No Products Found!</h1>
+          <% } %>
+        </main>
+        <%- include('../includes/end.ejs') %>

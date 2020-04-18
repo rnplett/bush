@@ -13,7 +13,7 @@ exports.gethome = (req, res, next) => {
 exports.getPeople = (req, res, next) => {
   Person.find()
     .then(people => {
-      res.render('admin/people', {
+      res.render('admin/edit-people-list', {
         people: people,
         pageTitle: 'People List',
         path: 'admin/people'
@@ -24,7 +24,7 @@ exports.getPeople = (req, res, next) => {
 exports.postFilterPeople = (req, res, next) => {
   Person.find({ name: { $regex: req.body.filterText, $options: 'i' } })
     .then(people => {
-      res.render('admin/people', {
+      res.render('admin/edit-people-list', {
         people: people,
         pageTitle: 'People List',
         path: 'admin/people'
@@ -33,8 +33,10 @@ exports.postFilterPeople = (req, res, next) => {
 };
 
 exports.postFilterPeopleAPI = (req, res, next) => {
+  res.send(req);
   Person.find({ name: { $regex: req.query.filterText, $options: 'i' } })
     .then(people => {
+      console.log(people)
       res.send(people)
     })
     .catch(err => {
@@ -60,7 +62,7 @@ exports.postAddPerson = (req, res, next) => {
     .save()
     .then(result => {
       console.log('Person Created!')
-      res.redirect('/admin/people')
+      res.redirect('/admin/edit-people-list')
     })
     .catch(err => {
       console.log(err)
