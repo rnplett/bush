@@ -1,0 +1,26 @@
+<%- include('../includes/head.ejs') %>
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+        <main class="centered">
+            <h1><%= person.name %></h1>
+            <hr>
+            <div class="card">
+              <div class="card__image">
+                <img src="<%= person.imageUrl %>" alt="<%= person.title %>">
+              </div>
+              <div class="card__name">
+                <%= person.name %><br>
+                <div class="card__group">
+                  <div id="bdate" class="card__date">
+                    b. <%= person.birthdateFormatted %>
+                  </div>
+                  <div id="ddate" class="card__date">
+                    d. <%= person.deathdateFormatted %>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </main>
+        <%- include('../includes/end.ejs') %>

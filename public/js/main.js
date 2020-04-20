@@ -14,3 +14,8 @@ function menuToggleClickHandler() {
 
 backdrop.addEventListener('click', backdropClickHandler);
 menuToggle.addEventListener('click', menuToggleClickHandler);
+
+window.onload = () => {
+  const dtfOptions = { dateStyle: 'medium', year: 'numeric', month: 'short', day: '2-digit', timeZone: 'UTC' };
+  const dtf = new Intl.DateTimeFormat('en-US', dtfOptions);
+}

@@ -1,0 +1,41 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/person.css">
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+        <main>
+          <% if (people.length > 0) { %>
+            <div>
+              <form action="/admin/filter" method="POST">
+                <input type="text" value="" name="filterText">
+                <button class="btn" type="submit">Search</button>
+              </form>
+            </div>
+            <div class="grid">
+              <% for (let person of people) { %>
+                <a href="/person/<%= person._id %>" class="link__div">
+                  <div class="card">
+                    <div class="card__image">
+                      <img src="<%= person.imageUrl %>" alt="<%= person.title %>">
+                    </div>
+                    <div class="card__name">
+                      <%= person.name %><br>
+                      <div class="card__group">
+                        <div id="bdate" class="card__date">
+                          b. <%= person.birthdateFormatted %>
+                        </div>
+                        <div id="ddate" class="card__date">
+                          d. <%= person.deathdateFormatted %>
+                        </div>                    
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              <% } %>
+            </div>
+          <% } else { %>
+            <h1>No Products Found!</h1>
+          <% } %>
+        </main>
+        <%- include('../includes/end.ejs') %>

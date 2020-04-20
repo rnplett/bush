@@ -1,7 +1,6 @@
 const path = require('path');
 
 const express = require('express');
-const bodyParser = require('body-parser');
 const creds = require("./data/creds");
 
 const errorController = require('./controllers/error');
@@ -14,7 +13,7 @@ app.set('views', 'views');
 
 const adminRoutes = require('./routes/admin');
 const apiRoutes = require('./routes/api');
-const shopRoutes = require('./routes/shop');
+const browseRoutes = require('./routes/browse');
 
 app.use(express.json());
 app.use('/api', apiRoutes);
@@ -23,7 +22,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/admin', adminRoutes);
-app.use(shopRoutes);
+app.use(browseRoutes);
 
 app.use(errorController.get404);
 

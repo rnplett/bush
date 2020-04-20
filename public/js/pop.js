@@ -1,10 +1,12 @@
 
 window.onload = () => {
+
   // Get the modal
   let modal = document.getElementById("myModal");
 
   // Get the button that opens the modal
   let relBtn = document.getElementById("myRelBtn");
+ 
 
   // Get the <span> element that closes the modal
   let span = document.getElementsByClassName("close")[0];
@@ -14,12 +16,10 @@ window.onload = () => {
 
   // When the user clicks the button, open the modal 
   relBtn.onclick = async function () {
+    const searchTxt = document.getElementById("searchStr").value;
     modal.style.display = "block";
-    //const p = "hi there"
-    //const p = await getPeopleList("/api/filterPeople/r");
-    //document.getElementById("peopleList").innerHTML = p;
-    //document.getElementById("peopleList").innerHTML = "new bold content!";
-    fetch("/api/filterPeople/r", {
+    console.log(searchTxt);
+    fetch("/api/filterPeople/"+searchTxt, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' }
     })
