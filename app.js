@@ -29,7 +29,7 @@ app.use(errorController.get404);
 mongoose
   .connect(creds.MONGO_CONNECT_STRING)
   .then(result => {
-    app.listen(3000);
+    app.listen(3100);
   })
   .catch(err => {
     console.log(err);
