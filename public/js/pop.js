@@ -1,63 +1,64 @@
 
-window.onload = () => {
+// Get the modal
+// if (typeof modal === 'undefined') {
+//   console.log('no modal');
+//   const modal = document.getElementById("myModal");  
+// } else {
+//   console.log('modal again');
+//   modal = document.getElementById("myModal");
+// }
 
-  // Get the modal
-  let modal = document.getElementById("myModal");
+modal = document.getElementById("myModal"); 
 
-  // Get the button that opens the modal
-  let relBtn = document.getElementById("myRelBtn");
- 
+// Get the button that opens the modal
+groupBtn = document.getElementById("myGroupBtn");
 
-  // Get the <span> element that closes the modal
-  let span = document.getElementsByClassName("close")[0];
+// Get the <span> element that closes the modal
+span = document.getElementsByClassName("close")[0];
 
-  // Get the <span> element that closes the modal
-  let pList = document.getElementById("peopleList").innerHTML;
+// When the user clicks the button, open the modal 
+groupBtn.onclick = function () {
+  searchTxt = document.getElementById("searchStr").value;
+  modal.style.display = "block";
+  console.log(searchTxt);
+  fetch("/api/filterPeople/"+searchTxt, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' }
+  })
+    .then(response => {
+      return response.json()
+    })
+    .then(result => {
+      text = "";
+      result.forEach(element => {
+        text += element.name + "<br>"
+      });
+      document.getElementById("peopleList").innerHTML = text;
+    })
+    .catch(err => console.log(err))
+}
 
-  // When the user clicks the button, open the modal 
-  relBtn.onclick = async function () {
-    const searchTxt = document.getElementById("searchStr").value;
-    modal.style.display = "block";
-    console.log(searchTxt);
-    fetch("/api/filterPeople/"+searchTxt, {
+// When the user clicks on <span> (x), close the modal
+span.onclick = function () {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+//const filterApiUrl = '/admin/filterAPI?filterText=Carter';
+// let searchString = document.getElementById('searchStr').value;
+//let people = {};
+function getPeopleList(filterApiUrl) {
+  return fetch(filterApiUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' }
     })
-      .then(response => {
-        return response.json()
-      })
-      .then(result => {
-        text = "";
-        result.forEach(element => {
-          text += element.name + "<br>"
-        });
-        document.getElementById("peopleList").innerHTML = text;
-      })
-      .catch(err => console.log(err))
-  }
-
-  // When the user clicks on <span> (x), close the modal
-  span.onclick = function () {
-    modal.style.display = "none";
-  }
-
-  // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function (event) {
-    if (event.target == modal) {
-      modal.style.display = "none";
-    }
-  }
-  //const filterApiUrl = '/admin/filterAPI?filterText=Carter';
-  // let searchString = document.getElementById('searchStr').value;
-  //let people = {};
-  function getPeopleList(filterApiUrl) {
-    return fetch(filterApiUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' }
-      })
-      .then(response => resolve(response))
-      .catch(err => console.log(err))  
-  }
+    .then(response => resolve(response))
+    .catch(err => console.log(err))  
 }
 
 

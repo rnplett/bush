@@ -25,7 +25,17 @@ const personSchema = new Schema({
   description: {
     type: String,
     required: false
-  }
+  },
+  leaderOf: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Group',
+    required: false
+  }],
+  memberOf: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Group',
+    required: false
+  }]
 });
 
 personSchema.virtual('birthdateFormatted').get(function () {
@@ -34,7 +44,6 @@ personSchema.virtual('birthdateFormatted').get(function () {
   } else {
     return "TBD"
   }
-
 });
 
 personSchema.virtual('deathdateFormatted').get(function () {

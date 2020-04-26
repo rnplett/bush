@@ -6,6 +6,7 @@
         <%- include('../includes/navigation.ejs') %>
         <main>
           <% if (people.length > 0) { %>
+            <button id="myAddBtn" class="btn btn__edit">Add Person</button>
             <div>
               <form action="/admin/filter" method="POST">
                 <input type="text" value="" name="filterText">

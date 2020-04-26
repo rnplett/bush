@@ -4,14 +4,16 @@
     <body>
         <%- include('../includes/navigation.ejs') %>
         <main class="centered">
-            <h1><%= person.name %></h1>
-            <hr>
+          <h1><%= person.name %></h1>         
+          <hr>
+          <a href="/admin/edit-person/<%= person._id %>" class="link__div">
             <div class="card">
               <div class="card__image">
                 <img src="<%= person.imageUrl %>" alt="<%= person.title %>">
               </div>
               <div class="card__name">
                 <%= person.name %><br>
+
                 <div class="card__group">
                   <div id="bdate" class="card__date">
                     b. <%= person.birthdateFormatted %>
@@ -22,5 +24,6 @@
                 </div>
               </div>
             </div>
+          </a>
         </main>
         <%- include('../includes/end.ejs') %>

@@ -23,6 +23,12 @@
   outline-color: #00695c;
 }
 
+.input-search {
+  display: block;
+  align-content: center;
+  margin: 1rem 1rem;
+}
+
 /* The Modal (background) */
 .modal {
   display: none; /* Hidden by default */

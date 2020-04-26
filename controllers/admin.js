@@ -97,7 +97,7 @@ exports.postEditPerson = (req, res, next) => {
     })
     .then(result => {
       console.log('Person Updated!');
-      res.redirect('/admin/people');
+      res.redirect('/person/' + personId);
     })
     .catch(err => {
       console.log(err);
