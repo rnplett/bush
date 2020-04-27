@@ -1,27 +1,32 @@
 
-// Get the modal
-// if (typeof modal === 'undefined') {
-//   console.log('no modal');
-//   const modal = document.getElementById("myModal");  
-// } else {
-//   console.log('modal again');
-//   modal = document.getElementById("myModal");
-// }
+let parentSearchData = [];
 
-modal = document.getElementById("myModal"); 
+// Get the modal
+const modal = document.getElementById("myModal"); 
 
 // Get the button that opens the modal
-groupBtn = document.getElementById("myGroupBtn");
+const parentBtn = document.getElementById("myParentBtn");
+const parentSearchBtn = document.getElementById("parentSearchBtn");
 
 // Get the <span> element that closes the modal
-span = document.getElementsByClassName("close")[0];
+const span = document.getElementsByClassName("close")[0];
 
 // When the user clicks the button, open the modal 
-groupBtn.onclick = function () {
-  searchTxt = document.getElementById("searchStr").value;
+parentBtn.onclick = () => {
   modal.style.display = "block";
-  console.log(searchTxt);
-  fetch("/api/filterPeople/"+searchTxt, {
+  document.getElementById("searchStr").focus();
+}
+
+// Get the input field
+document.getElementById("searchStr").addEventListener("keyup", function (event) {
+  if (event.keyCode === 13) {
+    searchBtn.click();
+  }
+});
+
+searchBtn.onclick = () => {
+  searchTxt = document.getElementById("searchStr").value;
+  fetch("/api/filterPeople/" + searchTxt, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' }
   })
@@ -29,17 +34,36 @@ groupBtn.onclick = function () {
       return response.json()
     })
     .then(result => {
+      console.log(result);
       text = "";
+      parentSearchData = result;
       result.forEach(element => {
-        text += element.name + "<br>"
+        text += "<div onclick=\"addParent('" + element._id + "')\" class='link__div'>";
+        text += element.name + " -- b." + element.birthdateFormatted + "</div>";
       });
-      document.getElementById("peopleList").innerHTML = text;
+      document.getElementById("selectionList").innerHTML = text;
     })
     .catch(err => console.log(err))
 }
 
+function addParent(id) {
+  parentSearchData.forEach((p) => {
+    if (p.id == id) {
+      // turn off modal
+      modal.style.display = "none";
+      // add parent to display
+      const l = document.getElementById("prettyParentList");
+      const t = document.createTextNode(p.name + " - b." + p.birthdateFormatted);
+      l.appendChild(t);
+      const b = document.createElement("br");
+      l.appendChild(b);
+      // add parent to input data
+    }
+  })
+}
+
 // When the user clicks on <span> (x), close the modal
-span.onclick = function () {
+span.onclick = () => {
   modal.style.display = "none";
 }
 
@@ -49,34 +73,4 @@ window.onclick = function (event) {
     modal.style.display = "none";
   }
 }
-//const filterApiUrl = '/admin/filterAPI?filterText=Carter';
-// let searchString = document.getElementById('searchStr').value;
-//let people = {};
-function getPeopleList(filterApiUrl) {
-  return fetch(filterApiUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' }
-    })
-    .then(response => resolve(response))
-    .catch(err => console.log(err))  
-}
 
-
-// // Example POST method implementation:
-// async function postData(url = '', data = {}) {
-//   // Default options are marked with *
-//   const response = await fetch(url, {
-//     method: 'POST', // *GET, POST, PUT, DELETE, etc.
-//     mode: 'cors', // no-cors, *cors, same-origin
-//     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-//     credentials: 'same-origin', // include, *same-origin, omit
-//     headers: {
-//       'Content-Type': 'application/json'
-//       // 'Content-Type': 'application/x-www-form-urlencoded',
-//     },
-//     redirect: 'follow', // manual, *follow, error
-//     referrerPolicy: 'no-referrer', // no-referrer, *client
-//     body: JSON.stringify(data) // body data type must match "Content-Type" header
-//   });
-//   return await response.json(); // parses JSON response into native JavaScript objects
-// }

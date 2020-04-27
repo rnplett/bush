@@ -160,6 +160,7 @@ form {
 .link__div {
   text-decoration: none;
   color: black;
+  cursor: pointer;
 }
 
 .card__name {

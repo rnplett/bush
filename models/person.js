@@ -54,4 +54,6 @@ personSchema.virtual('deathdateFormatted').get(function () {
   }
 });
 
+personSchema.set('toObject', { virtuals: true })
+
 module.exports = mongoose.model('Person', personSchema);
