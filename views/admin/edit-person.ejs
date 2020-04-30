@@ -72,11 +72,14 @@
                 <label for="description">Description:</label>
                 <textarea name="description" id="description" rows="5"><% if (editing) { %><%= person.description %><% } %></textarea>
             </div>
+            <div id="hiddenInputs">
                 <input type="hidden" value="<%= person.parentId01 %>" name="parentId01">
                 <input type="hidden" value="<%= person.parentId02 %>" name="parentId02">
             <% if (editing) { %>
                 <input type="hidden" value="<%= person._id %>" name="personId">
-            <% } %>
+            <% } %>              
+            </div>
+
             <button class="btn" type="submit"><% if (editing) { %>Update Person<% } else { %>Add Person<% } %></button>
         </form>
         <div class="person-form form-control">

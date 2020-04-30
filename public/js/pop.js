@@ -25,7 +25,8 @@ function addParent(id) {
       // add parent to display
       const l = document.getElementById("prettyParentList");
       addPersonCard(l, p);
-    }
+      const n = document.getElementById("hiddenInputs");
+      addInputField(n, "parent", p);    }
   })
 }
 
@@ -44,7 +45,8 @@ function addSpouse(id) {
       // add parent to display
       const l = document.getElementById("prettySpouse");
       addPersonCard(l, p);
-    }
+      const n = document.getElementById("hiddenInputs");
+      addInputField(n, "spouse", p);    }
   })
 }
 
@@ -63,6 +65,8 @@ function addKid(id) {
       // add parent to display
       const l = document.getElementById("prettyKidsList");
       addPersonCard(l, p);
+      const n = document.getElementById("hiddenInputs");
+      addInputField(n, "kid", p);
     }
   })
 }
@@ -85,7 +89,6 @@ searchBtn.onclick = () => {
       return response.json()
     })
     .then(result => {
-      console.log(result);
       text = "";
       parentSearchData = result;
       result.forEach(element => {
@@ -97,6 +100,13 @@ searchBtn.onclick = () => {
     .catch(err => console.log(err))
 }
 
+function addInputField(parentNode, group, person) {
+  const i = document.createElement("input");
+  i.setAttribute("type", "hidden");
+  i.value = person._id;
+  i.name = group + person._id;
+  parentNode.appendChild(i);
+}
 
 function addPersonCard(parentNode, person) {
   const d = document.createElement("div");
