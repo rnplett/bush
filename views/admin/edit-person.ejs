@@ -7,6 +7,52 @@
    <%- include('../includes/navigation.ejs') %>
 
     <main>
+        <% if (person.parentId01) { %>
+        <!-- Parent 01 -->
+        <a href="/admin/edit-person/<%= person.parentId01._id %>" class="link__div">
+          <div class="card">
+            <div class="card__image">
+              <img src="<%= person.parentId01.imageUrl %>" alt="<%= person.title %>">
+            </div>
+            <div class="card__name">
+              <%= person.parentId01.name %><br>
+        
+              <div class="card__group">
+                <div id="bdate" class="card__date">
+                  b. <%= person.parentId01.birthdateFormatted %>
+                </div>
+                <div id="ddate" class="card__date">
+                  d. <%= person.parentId01.deathdateFormatted %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+        <% } %>
+
+        <!-- Parent 02 -->
+        <% if (person.parentId02) { %>
+        <a href="/admin/edit-person/<%= person.parentId01._id %>" class="link__div">
+          <div class="card">
+            <div class="card__image">
+              <img src="<%= person.parentId01.imageUrl %>" alt="<%= person.title %>">
+            </div>
+            <div class="card__name">
+              <%= person.name %><br>
+        
+              <div class="card__group">
+                <div id="bdate" class="card__date">
+                  b. <%= person.parentId01.birthdateFormatted %>
+                </div>
+                <div id="ddate" class="card__date">
+                  d. <%= person.parentId01.deathdateFormatted %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+        <% } %>
+
         <form class="person-form" action="/admin/<% if (editing) { %>edit-person<% } else { %>add-person<% } %>" method="POST">
             <div class="form-control">
                 <label for="name">Name:</label>
@@ -26,16 +72,22 @@
                 <label for="description">Description:</label>
                 <textarea name="description" id="description" rows="5"><% if (editing) { %><%= person.description %><% } %></textarea>
             </div>
-
+                <input type="hidden" value="<%= person.parentId01 %>" name="parentId01">
+                <input type="hidden" value="<%= person.parentId02 %>" name="parentId02">
             <% if (editing) { %>
                 <input type="hidden" value="<%= person._id %>" name="personId">
             <% } %>
             <button class="btn" type="submit"><% if (editing) { %>Update Person<% } else { %>Add Person<% } %></button>
         </form>
         <div class="person-form form-control">
+          <p id="prettySpouse">Spouse:<br></p>
+          <button id="mySpouseBtn" class="btn">Add a Spouse</button>
+          <p id="prettyKidsList">Children:<br></p>
+          <button id="myKidsBtn" class="btn">Add a Child</button>
           <p id="prettyParentList">Parents:<br></p>
-          <button id="myParentBtn" class="btn">Add a Parent</button>          
+          <button id="myParentBtn" class="btn">Add a Parent</button>    
         </div>
+
         <!-- Trigger/Open The Modal -->
 
 
@@ -48,6 +100,7 @@
             <input type="text" name="searchStr" id="searchStr">
             <button id="searchBtn" class="btn">Search</button>
             <p id="selectionList"></p>
+            <input type="hidden" id="addType">
             <button id="addBtn" class="btn">Add New</button>
           </div>
         </div>
