@@ -8,6 +8,12 @@ With a closet full of genealogy data and regular requests for family tree printo
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
+This readme will get filled out and updated once this repo is ready to share. At this point an early look at the prototype can be found at http://shrub.rnplett.com:3100
+
+Please don't do anything stupid on this prototype or I'll have to lock it down so it's not open to the public.
+
+-----------------------------
+
 ### Prerequisites
 
 What things you need to install the software and how to install them
