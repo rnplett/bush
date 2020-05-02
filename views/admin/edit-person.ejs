@@ -29,49 +29,26 @@
           </div>
         </a>
         <% } %>
-
-        <!-- Parent 02 -->
-        <% if (person.parentId02) { %>
-        <a href="/admin/edit-person/<%= person.parentId01._id %>" class="link__div">
-          <div class="card">
-            <div class="card__image">
-              <img src="<%= person.parentId01.imageUrl %>" alt="<%= person.title %>">
-            </div>
-            <div class="card__name">
-              <%= person.name %><br>
-        
-              <div class="card__group">
-                <div id="bdate" class="card__date">
-                  b. <%= person.parentId01.birthdateFormatted %>
-                </div>
-                <div id="ddate" class="card__date">
-                  d. <%= person.parentId01.deathdateFormatted %>
-                </div>
-              </div>
-            </div>
-          </div>
-        </a>
-        <% } %>
-
+        <div class="person-form form-control">
+          <p id="prettyParentList">Parents:<br></p>
+          <button id="myParentBtn" class="btn">Add a Parent</button> 
+        </div>
         <form class="person-form" action="/admin/<% if (editing) { %>edit-person<% } else { %>add-person<% } %>" method="POST">
-            <div class="form-control">
-                <label for="name">Name:</label>
-                <input type="text" name="name" id="name" value="<% if (editing) { %><%= person.name %><% } %>">
+            <div class="card form-control">
+              <div class="form-control form__image">
+                  image:<input type="text" name="imageUrl" id="imageUrl" value="<% if (editing) { %><%= person.imageUrl %><% } else { %>
+                    https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTLWIz0P6f2Vrb19poSalmpjn7MCNB_xYEmBY1llUbs2QDbUekF
+                    <% } %>">
+                  name:<input type="text" name="name" id="name" value="<% if (editing) { %><%= person.name %><% } else {%>Name<%} %>">
+              </div>
+              <div class="card__group">
+                <div class="form-control form__date">
+                    born:<input type="date" name="birthdate" id="birthdate" step="0.01" value="<% if (editing) { %><%= person.birthdate.toISOString().substr(0,10) %><% } %>">
+                    died:<input type="date" name="deathdate" id="deathdate" step="0.01" value="<% if (editing) { %><%= person.deathdateFormatted %><% } %>">
+                </div>              
+              </div>            
             </div>
-            <div class="form-control">
-                <label for="imageUrl">Image URL:</label>
-                <input type="text" name="imageUrl" id="imageUrl" value="<% if (editing) { %><%= person.imageUrl %><% } else { %>
-                  https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTLWIz0P6f2Vrb19poSalmpjn7MCNB_xYEmBY1llUbs2QDbUekF
-                  <% } %>">
-            </div>
-            <div class="form-control">
-                <label for="birthdate">Birth Date:</label>
-                <input type="date" name="birthdate" id="birthdate" step="0.01" value="<% if (editing) { %><%= person.birthdate.toISOString().substr(0,10) %><% } %>">
-            </div>
-            <div class="form-control">
-                <label for="description">Description:</label>
-                <textarea name="description" id="description" rows="5"><% if (editing) { %><%= person.description %><% } %></textarea>
-            </div>
+
             <div id="hiddenInputs">
                 <input type="hidden" value="<%= person.parentId01 %>" name="parentId01">
                 <input type="hidden" value="<%= person.parentId02 %>" name="parentId02">
@@ -80,15 +57,15 @@
             <% } %>              
             </div>
 
-            <button class="btn" type="submit"><% if (editing) { %>Update Person<% } else { %>Add Person<% } %></button>
+            <button class="btn btn__edit" type="submit"><% if (editing) { %>Update Person<% } else { %>Add Person<% } %></button>
         </form>
         <div class="person-form form-control">
           <p id="prettySpouse">Spouse:<br></p>
           <button id="mySpouseBtn" class="btn">Add a Spouse</button>
+        </div>
+        <div class="person-form form-control">
           <p id="prettyKidsList">Children:<br></p>
-          <button id="myKidsBtn" class="btn">Add a Child</button>
-          <p id="prettyParentList">Parents:<br></p>
-          <button id="myParentBtn" class="btn">Add a Parent</button>    
+          <button id="myKidsBtn" class="btn">Add a Child</button>   
         </div>
 
         <!-- Trigger/Open The Modal -->
