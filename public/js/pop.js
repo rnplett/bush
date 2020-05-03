@@ -26,7 +26,10 @@ function addParent(id) {
       const l = document.getElementById("prettyParentList");
       addPersonCard(l, p);
       const n = document.getElementById("hiddenInputs");
-      addInputField(n, "parent", p);    }
+      addInputField(n, "parent", p);
+      document.getElementById("searchStr").value = "";
+      document.getElementById("selectionList").innerHTML = "";
+    }
   })
 }
 
@@ -46,7 +49,10 @@ function addSpouse(id) {
       const l = document.getElementById("prettySpouse");
       addPersonCard(l, p);
       const n = document.getElementById("hiddenInputs");
-      addInputField(n, "spouse", p);    }
+      addInputField(n, "spouse", p);
+      document.getElementById("searchStr").value = "";
+      document.getElementById("selectionList").innerHTML = "";
+    }
   })
 }
 
@@ -67,6 +73,8 @@ function addKid(id) {
       addPersonCard(l, p);
       const n = document.getElementById("hiddenInputs");
       addInputField(n, "kid", p);
+      document.getElementById("searchStr").value = "";
+      document.getElementById("selectionList").innerHTML = "";
     }
   })
 }

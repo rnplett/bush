@@ -71,7 +71,9 @@ exports.postAddPerson = (req, res, next) => {
 
 exports.getPerson = (req, res, next) => {
   Person.findById(req.params.personId)
+    .populate('parents')
     .then(person => {
+      console.log(person.parents);
       res.render('admin/edit-person', {
         pageTitle: 'Edit Person',
         path: '/admin/edit-person',
@@ -83,20 +85,31 @@ exports.getPerson = (req, res, next) => {
 
 exports.postEditPerson = (req, res, next) => {
   const personId = req.body.personId;
-  const name = req.body.name;
-  const birthdate = req.body.birthdate;
-  const imageUrl = req.body.imageUrl;
-  const description = req.body.description;
   Person.findById(personId)
     .then(person => {
-      person.name = name;
-      person.birthdate = birthdate;
-      person.imageUrl = imageUrl;
-      person.description = description;
+      person.name = req.body.name;
+      person.birthdate = req.body.birthdate;
+      person.deathdate = req.body.deathdate
+      person.imageUrl = req.body.imageUrl;
+      person.description = req.body.description;
+      let kids = [];
+      for (p in req.body) {
+        if (p.match(/parent(.*)/)) {
+          if (!person.parents.includes(req.body[p])) {
+            person.parents.push(req.body[p]);            
+          };
+        }
+        const s = p.match(/spouse(.*)/);
+        const k = p.match(/kid(.*)/);
+        if (k) {
+          kids.push(req.body[p])
+        }
+      }
+      console.log(kids);
+      person.families.push({ spouse: req.body[p], children: kids });
       return person.save();
     })
     .then(result => {
-      console.log('Person Updated!');
       res.redirect('/person/' + personId);
     })
     .catch(err => {

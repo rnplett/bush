@@ -26,16 +26,25 @@ const personSchema = new Schema({
     type: String,
     required: false
   },
-  leaderOf: [{
+  parents: [{
     type: Schema.Types.ObjectId,
-    ref: 'Group',
+    ref: 'Person',
     required: false
   }],
-  memberOf: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Group',
-    required: false
-  }]
+  families: [
+    {
+      spouse: {
+        type: Schema.Types.ObjectId,
+        ref: 'Person',
+        required: false
+      },
+      children: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Person',
+        required: false
+      }]
+    }
+  ]  
 });
 
 personSchema.virtual('birthdateFormatted').get(function () {

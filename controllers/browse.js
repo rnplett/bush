@@ -21,7 +21,8 @@ exports.getPeople = (req, res, next) => {
 
 exports.getPerson = (req, res, next) => {
   const personId = req.params.personId;
-  Person.findOne({_id: personId})
+  Person.findOne({ _id: personId })
+    .populate('parents')
     .then(person => {
     res.render('browse/person-detail', {
       person: person,
