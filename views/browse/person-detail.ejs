@@ -7,21 +7,21 @@
           <h1><%= person.name %></h1>         
           <hr>
           <div id="parentList">
-            <% person.parents.forEach((item) => {%>
-            <a href="/person/<%= item._id %>" class="link__div">
+            <% person.parents.forEach((parent) => {%>
+            <a href="/person/<%= parent._id %>" class="link__div">
               <div class="card">
                 <div class="card__image">
-                  <img src="<%= item.imageUrl %>" alt="<%= item.title %>">
+                  <img src="<%= parent.imageUrl %>" alt="<%= parent.title %>">
                 </div>
                 <div class="card__name">
-                  <%= item.name %><br>
+                  <%= parent.name %><br>
             
                   <div class="card__group">
                     <div id="bdate" class="card__date">
-                      b. <%= item.birthdateFormatted %>
+                      b. <%= parent.birthdateFormatted %>
                     </div>
                     <div id="ddate" class="card__date">
-                      d. <%= item.deathdateFormatted %>
+                      d. <%= parent.deathdateFormatted %>
                     </div>
                   </div>
                 </div>
@@ -48,5 +48,48 @@
               </div>
             </div>
           </a>
+          <% person.families.forEach((family) => {%>
+          <a href="/person/<%= family.spouse._id %>" class="link__div">
+            <div class="card">
+              <div class="card__image">
+                <img src="<%= family.spouse.imageUrl %>" alt="<%= family.spouse.title %>">
+              </div>
+              <div class="card__name">
+                <%= family.spouse.name %><br>
+          
+                <div class="card__group">
+                  <div id="bdate" class="card__date">
+                    b. <%= family.spouse.birthdateFormatted %>
+                  </div>
+                  <div id="ddate" class="card__date">
+                    d. <%= family.spouse.deathdateFormatted %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+            <% family.children.forEach((kid) => {%>
+            <a href="/person/<%= kid._id %>" class="link__div">
+              <div class="card">
+                <div class="card__image">
+                  <img src="<%= kid.imageUrl %>" alt="<%= kid.title %>">
+                </div>
+                <div class="card__name">
+                  <%= kid.name %><br>
+            
+                  <div class="card__group">
+                    <div id="bdate" class="card__date">
+                      b. <%= kid.birthdateFormatted %>
+                    </div>
+                    <div id="ddate" class="card__date">
+                      d. <%= kid.deathdateFormatted %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <%})%>
+          <%})%>
+          </div>
         </main>
         <%- include('../includes/end.ejs') %>

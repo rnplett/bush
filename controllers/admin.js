@@ -71,9 +71,16 @@ exports.postAddPerson = (req, res, next) => {
 
 exports.getPerson = (req, res, next) => {
   Person.findById(req.params.personId)
-    .populate('parents')
+    .populate([{
+      path: 'parents'
+    },
+    {
+      path: 'families.spouse'
+    },
+    {
+      path: 'families.children'
+    }])
     .then(person => {
-      console.log(person.parents);
       res.render('admin/edit-person', {
         pageTitle: 'Edit Person',
         path: '/admin/edit-person',
@@ -93,20 +100,23 @@ exports.postEditPerson = (req, res, next) => {
       person.imageUrl = req.body.imageUrl;
       person.description = req.body.description;
       let kids = [];
+      let spouse = "";
       for (p in req.body) {
         if (p.match(/parent(.*)/)) {
           if (!person.parents.includes(req.body[p])) {
             person.parents.push(req.body[p]);            
           };
-        }
-        const s = p.match(/spouse(.*)/);
-        const k = p.match(/kid(.*)/);
-        if (k) {
+        };
+        if (p.match(/spouse(.*)/)) {
+          spouse = req.body[p]
+        };
+        if (p.match(/kid(.*)/)) {
           kids.push(req.body[p])
         }
       }
-      console.log(kids);
-      person.families.push({ spouse: req.body[p], children: kids });
+      if (spouse) {
+        person.families.push({ spouse: spouse, children: kids });        
+      }
       return person.save();
     })
     .then(result => {

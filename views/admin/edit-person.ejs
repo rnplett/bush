@@ -7,30 +7,27 @@
    <%- include('../includes/navigation.ejs') %>
 
     <main>
-        <% if (person.parentId01) { %>
-        <!-- Parent 01 -->
-        <a href="/admin/edit-person/<%= person.parentId01._id %>" class="link__div">
-          <div class="card">
-            <div class="card__image">
-              <img src="<%= person.parentId01.imageUrl %>" alt="<%= person.title %>">
-            </div>
-            <div class="card__name">
-              <%= person.parentId01.name %><br>
-        
-              <div class="card__group">
-                <div id="bdate" class="card__date">
-                  b. <%= person.parentId01.birthdateFormatted %>
-                </div>
-                <div id="ddate" class="card__date">
-                  d. <%= person.parentId01.deathdateFormatted %>
+        <div class="person-form form-control">
+          <p id="prettyParentList">Parents:<br>
+            <% person.parents.forEach((parent) => { %>
+            <div class="card">
+              <div class="card__image">
+                <img src="<%= parent.imageUrl %>" alt="<%= parent.title %>">
+              </div>
+              <div class="card__name">
+                <%= parent.name %><br>
+                <div class="card__group">
+                  <div id="bdate" class="card__date">
+                    b. <%= parent.birthdateFormatted %>
+                  </div>
+                  <div id="ddate" class="card__date">
+                    d. <%= parent.deathdateFormatted %>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </a>
-        <% } %>
-        <div class="person-form form-control">
-          <p id="prettyParentList">Parents:<br></p>
+            <% }) %>
+          </p>
           <button id="myParentBtn" class="btn">Add a Parent</button> 
         </div>
         <form class="person-form" action="/admin/<% if (editing) { %>edit-person<% } else { %>add-person<% } %>" method="POST">
@@ -57,14 +54,55 @@
 
             <button class="btn btn__edit" type="submit"><% if (editing) { %>Update Person<% } else { %>Add Person<% } %></button>
         </form>
+        <% person.families.forEach((family) => {%>
         <div class="person-form form-control">
-          <p id="prettySpouse">Spouse:<br></p>
+          <p id="prettySpouse">Spouse:<br>
+            <div class="card">
+              <div class="card__image">
+                <img src="<%= family.spouse.imageUrl %>" alt="<%= family.spouse.title %>">
+              </div>
+              <div class="card__name">
+                <%= family.spouse.name %><br>
+            
+                <div class="card__group">
+                  <div id="bdate" class="card__date">
+                    b. <%= family.spouse.birthdateFormatted %>
+                  </div>
+                  <div id="ddate" class="card__date">
+                    d. <%= family.spouse.deathdateFormatted %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </p>
           <button id="mySpouseBtn" class="btn">Add a Spouse</button>
         </div>
         <div class="person-form form-control">
-          <p id="prettyKidsList">Children:<br></p>
+          <p id="prettyKidsList">Children:<br>
+            <% family.children.forEach((kid) => {%>
+            <a href="/person/<%= kid._id %>" class="link__div">
+              <div class="card">
+                <div class="card__image">
+                  <img src="<%= kid.imageUrl %>" alt="<%= kid.title %>">
+                </div>
+                <div class="card__name">
+                  <%= kid.name %><br>
+                  <div class="card__group">
+                    <div id="bdate" class="card__date">
+                      b. <%= kid.birthdateFormatted %>
+                    </div>
+                    <div id="ddate" class="card__date">
+                      d. <%= kid.deathdateFormatted %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <%})%>
+          </p>
           <button id="myKidsBtn" class="btn">Add a Child</button>   
         </div>
+        <% }) %>
 
         <!-- Trigger/Open The Modal -->
 

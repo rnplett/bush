@@ -5,6 +5,21 @@ const Schema = mongoose.Schema;
 const dtfOptions = { dateStyle: 'medium', year: 'numeric', month: 'short', day: '2-digit', timeZone: 'UTC' };
 const dtf = new Intl.DateTimeFormat('en-US', dtfOptions);
 
+// const familySchema = new Schema({
+//   spouse: {
+//     type: Schema.Types.ObjectId,
+//     ref: 'Person',
+//     required: false
+//   },
+//   children: [{
+//     type: Schema.Types.ObjectId,
+//     ref: 'Person',
+//     required: false
+//   }]
+// })
+
+// module.exports = mongoose.model('Family', familySchema);
+
 const personSchema = new Schema({
   name: {
     type: String,
@@ -31,20 +46,18 @@ const personSchema = new Schema({
     ref: 'Person',
     required: false
   }],
-  families: [
-    {
-      spouse: {
-        type: Schema.Types.ObjectId,
-        ref: 'Person',
-        required: false
-      },
-      children: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Person',
-        required: false
-      }]
-    }
-  ]  
+  families: [new Schema({
+    spouse: {
+      type: Schema.Types.ObjectId,
+      ref: 'Person',
+      required: false
+    },
+    children: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Person',
+      required: false
+    }]
+  })]  
 });
 
 personSchema.virtual('birthdateFormatted').get(function () {
