@@ -7,7 +7,7 @@
           <h1><%= person.name %></h1>         
           <hr>
           <div id="parentList">
-            <% person.parents.forEach((parent) => {%>
+            <% person.parents[0].parents.forEach((parent) => {%>
             <a href="/person/<%= parent._id %>" class="link__div">
               <div class="card">
                 <div class="card__image">

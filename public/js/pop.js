@@ -1,5 +1,5 @@
 
-let parentSearchData = [];
+let searchData = [];
 
 // Get the modal
 const modal = document.getElementById("myModal"); 
@@ -17,8 +17,38 @@ document.getElementById("myParentBtn").onclick = () => {
   document.getElementById("searchStr").focus();
 }
 
-function addParent(id) {
-  parentSearchData.forEach((p) => {
+function addParent(id,fid) {
+  searchData.forEach((p) => {
+    if (p.id == id) {
+      // turn off modal
+      modal.style.display = "none";
+      // add parent to display
+      if (!fid) { fid = 'p01' };
+      let f = document.getElementById("parentFamily" + fid);
+      if (!f) {
+        const l = document.getElementById("prettyParentList");
+        f = document.createElement('div');
+        f.id = 'parentFamily' + fid;
+        l.appendChild(f);
+      }
+      addPersonCard(f, p);
+      const n = document.getElementById("hiddenInputs");
+      addInputField(n, "parent", p, fid);
+      document.getElementById("searchStr").value = "";
+      document.getElementById("selectionList").innerHTML = "";
+    }
+  })
+}
+
+// Add Parent functions
+document.getElementById("myFamilyBtn").onclick = () => {
+  modal.style.display = "block";
+  document.getElementById("addType").value = "addFamily";
+  document.getElementById("searchStr").focus();
+}
+
+function addFamily(id) {
+  searchData.forEach((p) => {
     if (p.id == id) {
       // turn off modal
       modal.style.display = "none";
@@ -40,16 +70,17 @@ document.getElementById("mySpouseBtn").onclick = () => {
   document.getElementById("searchStr").focus();
 }
 
-function addSpouse(id) {
-  parentSearchData.forEach((p) => {
+function addSpouse(id, fid) {
+  searchData.forEach((p) => {
     if (p.id == id) {
       // turn off modal
       modal.style.display = "none";
       // add parent to display
+      if (!fid) { fid = 'f01' };
       const l = document.getElementById("prettySpouse");
       addPersonCard(l, p);
       const n = document.getElementById("hiddenInputs");
-      addInputField(n, "spouse", p);
+      addInputField(n, "spouse", p, fid);
       document.getElementById("searchStr").value = "";
       document.getElementById("selectionList").innerHTML = "";
     }
@@ -63,16 +94,17 @@ document.getElementById("myKidsBtn").onclick = () => {
   document.getElementById("searchStr").focus();
 }
 
-function addKid(id) {
-  parentSearchData.forEach((p) => {
+function addKid(id, fid) {
+  searchData.forEach((p) => {
     if (p.id == id) {
       // turn off modal
       modal.style.display = "none";
       // add parent to display
+      if (!fid) { fid = f01 };
       const l = document.getElementById("prettyKidsList");
       addPersonCard(l, p);
       const n = document.getElementById("hiddenInputs");
-      addInputField(n, "kid", p);
+      addInputField(n, "kid", p, fid);
       document.getElementById("searchStr").value = "";
       document.getElementById("selectionList").innerHTML = "";
     }
@@ -98,21 +130,28 @@ searchBtn.onclick = () => {
     })
     .then(result => {
       text = "";
-      parentSearchData = result;
+      searchData = result;
       result.forEach(element => {
-        text += "<div onclick=\""+ t +"('" + element._id + "')\" class='link__div'>";
-        text += element.name + " -- b." + element.birthdateFormatted + "</div>";
+        if (!(element.families) | (element.families.length == 0)) {
+          text += "<div onclick=\""+ t +"('" + element._id + "')\" class='link__div'>";
+          text += element.name + " -- b." + element.birthdateFormatted + "</div>";
+        } else {
+          element.families.forEach(family => {
+            text += "<div onclick=\"" + t + "('" + element._id + "','"+ family._id +"')\" class='link__div'>";
+            text += element.name + " -- b." + element.birthdateFormatted + "</div>";
+          })          
+        }
       });
       document.getElementById("selectionList").innerHTML = text;
     })
     .catch(err => console.log(err))
 }
 
-function addInputField(parentNode, group, person) {
+function addInputField(parentNode, group, person, familyId) {
   const i = document.createElement("input");
   i.setAttribute("type", "hidden");
   i.value = person._id;
-  i.name = group + person._id;
+  i.name = 'new' + group + '-' + person._id + '-' + familyId;
   parentNode.appendChild(i);
 }
 

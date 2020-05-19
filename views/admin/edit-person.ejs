@@ -9,7 +9,7 @@
     <main>
         <div class="person-form form-control">
           <p id="prettyParentList">Parents:<br>
-            <% person.parents.forEach((parent) => { %>
+            <% person.parents[0].parents.forEach((parent) => { %>
             <div class="card">
               <div class="card__image">
                 <img src="<%= parent.imageUrl %>" alt="<%= parent.title %>">
@@ -54,6 +54,8 @@
 
             <button class="btn btn__edit" type="submit"><% if (editing) { %>Update Person<% } else { %>Add Person<% } %></button>
         </form>
+        <button id="mySpouseBtn" class="btn">Add a Spouse</button>
+        <button id="myKidsBtn" class="btn">Add a Child</button>
         <% person.families.forEach((family) => {%>
         <div class="person-form form-control">
           <p id="prettySpouse">Spouse:<br>
@@ -75,10 +77,9 @@
               </div>
             </div>
           </p>
-          <button id="mySpouseBtn" class="btn">Add a Spouse</button>
         </div>
         <div class="person-form form-control">
-          <p id="prettyKidsList">Children:<br>
+          <p id="prettyKidsList">Children:<br></p>
             <% family.children.forEach((kid) => {%>
             <a href="/person/<%= kid._id %>" class="link__div">
               <div class="card">
@@ -98,11 +99,10 @@
                 </div>
               </div>
             </a>
-            <%})%>
-          </p>
-          <button id="myKidsBtn" class="btn">Add a Child</button>   
+            <%})%> 
         </div>
         <% }) %>
+        <button id="myFamilyBtn" class="btn">Add a Family</button>
 
         <!-- Trigger/Open The Modal -->
 

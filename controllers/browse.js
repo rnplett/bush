@@ -1,5 +1,5 @@
 const Person = require('../models/person')
-// const Cart = require('../models/cart');
+const Family = require('../models/family');
 
 exports.home = (req, res, next) => {
   res.redirect('/people');
@@ -23,7 +23,12 @@ exports.getPerson = (req, res, next) => {
   const personId = req.params.personId;
   Person.findOne({ _id: personId })
     .populate([{
-      path: 'parents'
+      path: 'parents',
+      model: Family,
+      populate: {
+        path: 'parents',
+        model: Person
+      }
     },
     {
       path: 'families.spouse'  

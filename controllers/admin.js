@@ -1,6 +1,7 @@
 const dateFormat = require('dateformat');
 
 const Person = require('../models/person');
+const Family = require('../models/family');
 
 exports.gethome = (req, res, next) => {
   res.render('admin/home', {
@@ -72,7 +73,12 @@ exports.postAddPerson = (req, res, next) => {
 exports.getPerson = (req, res, next) => {
   Person.findById(req.params.personId)
     .populate([{
-      path: 'parents'
+      path: 'parents',
+      model: Family,
+      populate: {
+        path: 'parents',
+        model: Person
+      }
     },
     {
       path: 'families.spouse'
@@ -99,23 +105,42 @@ exports.postEditPerson = (req, res, next) => {
       person.deathdate = req.body.deathdate
       person.imageUrl = req.body.imageUrl;
       person.description = req.body.description;
-      let kids = [];
-      let spouse = "";
+      let m = null;
+      let newFamilies = {};
       for (p in req.body) {
-        if (p.match(/parent(.*)/)) {
-          if (!person.parents.includes(req.body[p])) {
-            person.parents.push(req.body[p]);            
-          };
+        m = p.match(/new(.*)-(.*)-(.*)/);
+        if (m) {
+          if (m[1] == 'parent') {
+            if (!newFamilies[m[3]]) {
+              newFamilies[m[3]] = { children: [person._id], parents: [m[2]] }
+            } else {
+              newFamilies[m[3]]['parents'].push(m[2])
+            };
+          } else if (m[1] == 'spouse') {
+            if (!newFamilies[m[3]]) {
+              newFamilies[m[3]] = { parents: [person._id, m[2]]}
+            } else {
+              newFamilies[m[3]]['parents'].push(m[2])
+            };
+          } else if (m[1] == 'kid') {
+            if (!newFamilies[m[3]]) {
+              newFamilies[m[3]] = { children: [m[2]], parents: [person._id] }
+            } else {
+              newFamilies[m[3]]['children'].push(m[2])
+            };
+          }
         };
-        if (p.match(/spouse(.*)/)) {
-          spouse = req.body[p]
-        };
-        if (p.match(/kid(.*)/)) {
-          kids.push(req.body[p])
+      };
+      for (family in newFamilies) {
+        console.log(newFamilies[family]);
+        console.log('--------')
+        f = new Family(newFamilies[family]);
+        f.save();
+        if (family.match(/p/)) {
+          person.parents.push(f)
+        } else if (family.match(/f/)) {
+          person.families.push(f)
         }
-      }
-      if (spouse) {
-        person.families.push({ spouse: spouse, children: kids });        
       }
       return person.save();
     })
